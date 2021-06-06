@@ -1,50 +1,92 @@
-// UC8 Adding the script for the salary range update when user is entering the data.
-const salary = document.querySelector('#salary');
-const output = document.querySelector('.salary—output');
-output.textContent = salary.value;
-salary.addEventListener('input', function() 
-{
-    output.textContent = salary.value; 
-});
-// UC 9 PopulateOnSubmit
-const save = () => {
-    try {
-        let EmployeePayroll = createEmployeePayroll();
-    }
-    catch (e) {
-        return e;
-    }
-}
-const createEmployeePayroll = () => {
-    let employeePayrollData = new EmployeePayroll();
-    try {
-        employeePayrollData.name = getInputValueById('#name');
-    }
-    catch (e) {
-        setTextValue('.text-error', e);
-        throw e;
-    }
+Employee validation through Getter & Setter Method
+class EmployeePayRoll
+ {
+  // getter and setter method
+  get id() 
+  {
+    return this._id;
+  }
+  set id(id) {
+    this._id = id;
+  }
 
-    employeePayrollData.profilePic = getSelectedValues('[name=profile]').pop();
-    employeePayrollData.gender = getSelectedValues('[name=gender]').pop();
-    employeePayrollData.department = getSelectedValues('[name=department]');
-    employeePayrollData.salary = getInputValueById('#salary');
-    employeePayrollData.note = getInputValueById('#notes');
-    let date = getInputValueById('#day')+","+getInputValueById('#month')+","+getInputValueById('#year');
-    employeePayrollData.startDate = new Date(date);
-    alert(employeePayrollData.toString());
-    return employeePayrollData;
+  get name() {
+    return this._name;
+  }
+  set name(name) {
+    let nameRegex = RegExp("^[A-Z]{1}[a-zA-Z\\s]{2,}$");
+    if (nameRegex.test(name)) this._name = name;
+    else throw "Name is Incorrect!";
+  }
+
+  get profilePic() {
+    return this._profilePic;
+  }
+  set profilePic(profilePic) {
+    this._profilePic = profilePic;
+  }
+
+  get gender() {
+    return this._gender;
+  }
+  set gender(gender) {
+    this._gender = gender;
+  }
+
+  get department() {
+    return this._department;
+  }
+  set department(department) {
+    this._department = department;
+  }
+
+  get salary() {
+    return this._salary;
+  }
+  set salary(salary) {
+    this._salary = salary;
+  }
+
+  get note() {
+    return this._note;
+  }
+  set note(note) {
+    this._note = note;
+  }
+
+  get startDate() {
+    return this._startDate;
+  }
+  set startDate(startDate) {
+    let now = new Date();
+    if (startDate > now) throw "Start Date is a Future Date!";
+    let diff = Math.abs(now.getTime() - startDate.getTime());
+    if (diff / (1000 * 60 * 60 * 24) > 30)
+      throw "Start Date is beyond 30 Days!";
+    this._startDate = startDate;
+  }
+
+  toString() {
+    const options = { year: "numeric", month: "short", day: "numeric" };
+    const empDate = !this.startDate ? "undefined" : this.startDate;
+    return (
+      "id=" +
+      this.id +
+      ", name='" +
+      this.name +
+      ", gender='" +
+      this.gender +
+      ", profilePic='" +
+      this.profilePic +
+      ", department=" +
+      this.department +
+      ", salary=" +
+      this.salary +
+      ", startDate=" +
+      empDate +
+      ", note=" +
+      this.note
+    );
+  }
 }
-const getSelectedValues = (propertyValue) => {
-    let allItems = document.querySelectorAll(propertyValue);
-    let sellItems = [];
-    allItems.forEach(item => {
-        if (item.checked)
-            sellItems.push(item.value);
-    });
-    return sellItems;
-}
-const getInputValueById = (id) => {
-    let value = document.querySelector(id).value;
-    return value;
-}
+© 2021 GitHub, Inc.
