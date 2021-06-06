@@ -6,7 +6,7 @@ salary.addEventListener('input', function()
 {
     output.textContent = salary.value; 
 });
-// UC 9
+// UC 9 PopulateOnSubmit
 const save = () => {
     try {
         let EmployeePayroll = createEmployeePayroll();
