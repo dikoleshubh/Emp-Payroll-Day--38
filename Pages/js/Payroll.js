@@ -2,7 +2,7 @@
 // Employee validation through Getter & Setter Method UC-10
 =======
 //Employee validation through Getter & Setter Method
->>>>>>> 8e747f01fd2b4e5ad737b80280d1f087ef01541c:Pages/js/Payroll.js
+
 class EmployeePayRoll
  {
   // getter and setter method
